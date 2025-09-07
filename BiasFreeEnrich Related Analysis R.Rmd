@@ -5,7 +5,7 @@ date: "2025-08-15"
 ---
 
 #Library
-```{r}
+```{r Library}
 library(readxl)
 library(dplyr)
 library(BiasFreeEnrich)
@@ -19,7 +19,7 @@ library(openxlsx)
 library(grid)
 ```
 #Import
-```{r}
+```{r Import}
 
 library(readxl)
 folder <- getwd() # or use here::here() or rstudioapi for more precise location
@@ -46,7 +46,7 @@ Yang_Sig <- mmc6_250
 Lin_Sig <- Sup.Table.S2...ANOVA_significant_282.proteins
 ```
 ##Import related function 
-```{r}
+```{r Import related functions}
 #Term conversion to keep the terms consistent between DAVID, STRING, Enrichr, and BFE
 
 #DAVID GOBP terms
@@ -89,7 +89,7 @@ format_GO_term_STRING <- function(df, term_col = "term description", id_col = "#
 }
 ```
 ##Conversions 
-```{r}
+```{r Conversions}
 #Term conversion to keep the terms styling consistent between DAVID, STRING, Enrichr, and BFE
 #Liver 
   #DAVID
@@ -193,7 +193,7 @@ format_GO_term_STRING <- function(df, term_col = "term description", id_col = "#
 ```
 #Statistical analysis of datasets
 ##Liver Synthetic 
-```{r}
+```{r Statistical analysis of Liver Synthetic}
 #Data frame containing proteins determined as having a high expression within the Liver. 
 Liver_Ctrl <- High.Liver.expression.IHC.background
 
@@ -226,7 +226,7 @@ generate_pvalues <- function(dataframe, num_significant) {
 
 ```
 ##Yang et al. 
-```{r}
+```{r Statistical analysis of Yang et al.}
 #Control sample background for Yang et al.
   #Filtering for being in more than 70% of either control or patient as this was the cut off outlined in Yang et al.'s paper 
   #Yang_Ctrl_Complete_915 contains gene names that were missing from Yang et al.'s paper. 
@@ -267,7 +267,7 @@ generate_pvalues <- function(dataframe, num_significant) {
   YangReAn_Sig <- data.frame(YangReAn_Sig[YangReAn_Sig$padjust<0.01,])
 ```
 ##Lin et al.
-```{r}
+```{r Statistical analysis of Liver Lin et al.}
 #Control sample background for Lin et al.
   #df edited to contain only the values of interest and re-ordered samples (G1:G18)
   Lin_all <- ALL_2.119.proteins[, c(6:9, 135, 145:152, 136:144)]
@@ -325,7 +325,7 @@ generate_pvalues <- function(dataframe, num_significant) {
 ```
 #Fig. 2 - Difference in terms retrieved when using different enrichment tools
 ##Fig. 2 related functions  
-```{r}
+```{r Fig. 2 related functions}
 #Venn diagram function that displays the overlap and indicates which terms are found in which data frames
 venn_diagram <- function(dataframes, columns, labels, title = NULL, subtitle = NULL, show_plot = TRUE, save_as_svg = FALSE, svg_filename = "venn_diagram.svg", show_overlap = TRUE) {
   if (length(labels) != length(dataframes)) {
@@ -385,7 +385,7 @@ venn_diagram <- function(dataframes, columns, labels, title = NULL, subtitle = N
 }
 ```
 ##Fig. 2 items
-```{r}
+```{r Fig. 2 items}
 #Comparing what terms are returned when using base Enrichr, DAVID, and STRING on our synthetic liver data frame and published DEPs from Yang et al. and Lin et al. papers. This data is displayed in Fig. 2. 
 
 #Using baseline Enrichr on the synthetic liver dataframe and published DEPs from Yang et al. and Lin et al. Filtered to only include terms associated with at least 2 genes.       
@@ -509,7 +509,7 @@ venn_diagram <- function(dataframes, columns, labels, title = NULL, subtitle = N
 ```
 #Fig. 3 - Enrichment without background correction will return sample specific terms
 ##Fig. 3 related functions
-```{r}
+```{r Fig. 3 related functions}
 #This is a modified version of the tornado plot function used for Fig. 4 that instead graphs based on the most significant term found in the List_Nobackground data frame. It also uses a different colour scheme to be paired with the venn diagrams
 TorPlotRev <- function(List_Background, List_Nobackground, save_svg = F, output_file = "TornadoPlot.svg") {
   # Utility to select the first matching column name
@@ -739,7 +739,7 @@ grid_3x2 <- function(plots, filename, width = 12, height = 18, save_svg = FALSE)
 }
 ```
 ##Fig. 3 items
-```{r}
+```{r Fig. 3 items}
 #Importing results obtained when running the synthetic liver background data frame which contains HPA proteins with a high expression level (n =1238) through DAVID and STRING without a BG. This data is displayed in Fig. 3. 
 
 #Using baseline Enrichr on the n = 1238 synthetic liver HPA data frame        
@@ -853,7 +853,7 @@ df <- venn_diagram(
 
 #Fig. 4 - BFE is an improved enrichment tool
 ##Fig. 4 related functions
-```{r}
+```{r Fig. 4 related functions}
 #Tornado plot function which displays the top 10 terms as determined by significance in the background corrected (1st listed) data frame. This function is used in order to display the data found in Fig. 4.  
 TorPlot <- function(List_Background, List_Nobackground, save_svg = T, output_file = "TornadoPlot.svg") {
   select_pval_col <- function(df, candidates) {
@@ -1129,7 +1129,7 @@ grid_3x3 <- function(plots, filename, width = 20, height = 50) {
 
 ```
 ##Synthetic Liver
-```{r}
+```{r Analysis of Published Synthetic Liver data}
 #BiasFreeEnrich (BFE)
   set.seed(200)
   #BG
@@ -1155,7 +1155,7 @@ grid_3x3 <- function(plots, filename, width = 20, height = 50) {
 ```
 ##Enrichment using published DEPs
 ###Yang et al.
-```{r}
+```{r Analysis of Published Yang et al. data}
 #List of DEPs fron Yang et al. retrieved from Supplemental table S6 titled 'Summary of differentially expressed proteins in RCVS’ 
 Yang_Sig <- mmc6_250
   
@@ -1182,7 +1182,7 @@ Yang_Sig <- mmc6_250
   TorPlot(Yang_BFE_BG_KEGG, Yang_BFE_NoBG_KEGG, output_file = "Yang_BFE_KEGG.svg")
 ```
 ###Lin et al. 
-```{r}
+```{r Analysis of Published Lin et al. data}
 #List of DEPs fron Lin et al. retrieved from Supplemental table S2 titled 'ANOVA_significant_282 proteins’ 
 Lin_Sig <- Sup.Table.S2...ANOVA_significant_282.proteins
 
@@ -1210,7 +1210,7 @@ Lin_Sig <- Sup.Table.S2...ANOVA_significant_282.proteins
 ```
 ##Enrichment using re-analysed data and DEPs
 ###Yang et al.
-```{r}
+```{r Re-analysis of Raw Yang et al. data}
 #BFE
   set.seed(200)
   #BG
@@ -1234,7 +1234,7 @@ Lin_Sig <- Sup.Table.S2...ANOVA_significant_282.proteins
   TorPlot(YangReAn_BFE_BG_KEGG, YangReAn_BFE_NoBG_KEGG)
 ```
 ###Lin et al. 
-```{r}
+```{r Re-analysis of Raw Lin et al. data}
 #BFE
   set.seed(200)
   #BG
@@ -1258,7 +1258,7 @@ Lin_Sig <- Sup.Table.S2...ANOVA_significant_282.proteins
   TorPlot(LinReAn_BFE_BG_KEGG, LinReAn_BFE_NoBG_KEGG, output_file = "LinReAn_BFE_KEGG.svg")
 ```
 ##Combined graphing for Fig. 4
-```{r}
+```{r Combined graphing for Fig. 4}
 #Used for combined viewing of the terms displayed in Supplemental Fig. S2 and Fig. 4. Plots do not display well natively in R and are best viewed using the automatically saved .svg
 
 #Using the published DEPs by Yang et al. and Lin et al.
@@ -1332,7 +1332,7 @@ grid_3x3(Fig4KEGG_ReAn, "Fig4KEGG_ReAn.svg")
 
 ```
 #Data frame export for supplemental tables 
-```{r}
+```{r Data frame export for supplemental tables}
 #Data frames relating to Supplemental table S1. Contains the DEPs uncovered by our re-analysis of Yang et al.'s and Lin et al.'s data and those artificially created using the Liver proteins tagged as having high expression by the HPA.  
 df1 <- Liver_Ctrl
 df2 <- Liver_Sig
