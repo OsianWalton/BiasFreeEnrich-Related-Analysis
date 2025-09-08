@@ -21,7 +21,7 @@ library(grid)
 ```
 #Import
 ```{r Import}
-#If you have downloaded all 3 folders then this code will import all of the data required for analysis into the R environment. 
+#If you have downloaded all 3 folders and have them in the same folder as this .Rmd file then this code will import all of the data required for analysis into the R environment. 
 
 # List of folders to Import
 folders <- c("Processed Data", "Raw Data", "Re-analysed Data")
